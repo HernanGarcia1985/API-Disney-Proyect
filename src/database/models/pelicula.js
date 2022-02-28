@@ -27,6 +27,12 @@ module.exports = (sequelize,DataTypes) => {
             type: DataTypes.INTEGER,
             null: true,
             default: null
+        },
+        Genero_id: {
+            type: DataTypes.INTEGER,
+            foreingKey: true,
+            null: true,
+            default: null
         }
     }
 

@@ -17,12 +17,6 @@ module.exports = (sequelize,DataTypes) => {
         Nombre: {
             type: DataTypes.STRING,
             null: false
-        },
-        Pelicula_id: {
-            type: DataTypes.INTEGER,
-            foreingKey: true,
-            null: true,
-            default: null
         }
     }
 
