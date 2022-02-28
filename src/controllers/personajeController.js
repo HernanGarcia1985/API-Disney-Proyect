@@ -10,10 +10,10 @@ const personajeController = {
 			data: []
 		}
 
-		db.Personaje.findAll()
+		db.Personaje.findAll({attributes: ['Imagen','Nombre']})
 				.then((totalDePersonajes) => {
 					if(totalDePersonajes){
-						resultado.data = totalDePersonajes; //cambiar para q muestre imagen y nombre
+						resultado.data = totalDePersonajes; 
 						resultado.cantidad = totalDePersonajes.length;
 						res.json(resultado);
 					}
