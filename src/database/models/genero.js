@@ -28,13 +28,11 @@ module.exports = (sequelize,DataTypes) => {
     const Genero = sequelize.define (alias,cols,config);
 
     Genero.associate = function(models){
-        //Usuario.belongsToMany(models.Producto,{
-        //    as: "productos",
-        //    through: "productoUsuario",
-        //    foreignKey: "id_usuario",
-        //    otherKey: "id_producto",
-        //    timestamps: false
-        //});
+        Genero.hasMany(models.Pelicula,{
+            as: "peliculasgen",
+            foreignKey: "Genero_id",
+            timestamps: false
+        });
     }
 
     return Genero;
