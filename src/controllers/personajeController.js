@@ -40,9 +40,11 @@ const personajeController = {
 				.then(function([resultadoPersonaje,resultadoPelicula]){
 					if(resultadoPersonaje){
 						resultado.data.push(resultadoPersonaje.dataValues);
-                        resultado.data.push(resultadoPelicula.dataValues);
-						resultado.cantidad = 1;
-					}
+                        resultado.cantidad = 1;
+                        if(resultadoPelicula){
+                            resultado.data.push(resultadoPelicula.dataValues);
+                        }
+                    }
 					res.json(resultado);
 				})
 				.catch(function(error){
