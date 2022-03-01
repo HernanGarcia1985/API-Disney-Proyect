@@ -2,8 +2,9 @@ const db = require('../database/models');
 const Usuario = require('../database/models/usuario');
 const bcryptjs = require('bcryptjs');
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
-const secretKey = 'Mi Llave Ultra Secreta' // Agregarla al ENV
+const secretKey = process.env.SECRETKEY;
 
 const userController = {
     login: (req, res) => {
