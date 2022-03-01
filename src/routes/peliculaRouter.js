@@ -22,3 +22,5 @@ router.delete('/movies/:id',cors(corsOptions),peliculaController.peliculaDestroy
 router.get('/movies?name',cors(corsOptions),peliculaController.peliculasPorTitulo);
 
 router.get('/movies?genre',cors(corsOptions),peliculaController.peliculasPorGeneroId);
+
+module.exports = router;

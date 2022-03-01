@@ -26,3 +26,5 @@ router.get('/characters?age',cors(corsOptions),personajeController.personajesPor
 router.get('/characters?weight',cors(corsOptions),personajeController.personajesPorPeso);
 
 router.get('/characters?movie',cors(corsOptions),personajeController.personajesPorPeliculaId);
+
+module.exports = router;
