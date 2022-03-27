@@ -157,13 +157,7 @@ const peliculaController = {
 				data: []
 			}
 
-            let token = req.query.token;
-            jwt.verify(token,secretKey,(err)=>{
-                if(err){
-                    resultado.data.push('Token inválido');
-                    res.json(resultado);
-                }
-                else{
+            
                     db.Pelicula.findAll({
                         where:{Titulo:req.query.name},
                         order:[['Titulo',req.query.order]]
@@ -172,14 +166,13 @@ const peliculaController = {
                         if(peliculas){
                             resultado.data = peliculas; 
                             resultado.cantidad = peliculas.length;
-                            res.json(resultado);
+                            res.status(200).json(resultado);
                         }
                     })
                     .catch(function(error){
                         console.log("No se pudo acceder a la base de datos");
                     })
-                }
-            });  
+             
         },
 
         peliculasPorGeneroId: (req, res) => {
@@ -200,7 +193,7 @@ const peliculaController = {
                         if(peliculas){
                             resultado.data = peliculas; 
                             resultado.cantidad = peliculas.length;
-                            res.json(resultado);
+                            res.status(200).json(resultado);
                         }
                     })
                     .catch(function(error){

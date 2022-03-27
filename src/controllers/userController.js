@@ -37,20 +37,20 @@ const userController = {
                         resultado.data.push("Bienvenido, " + req.body.email);
                         resultado.cantidad = 1;
                         resultado.token.push(token);
-                        return res.json(resultado);
+                        return res.status(200).json(resultado);
                     } 
                     else{
                         resultado.data.push('Las credenciales son inválidas');
-                        return res.json(resultado);   
+                        return res.status(401).json(resultado);   
                     }
                 }
                 else{
                     resultado.data.push('No se encuentra este email en nuestra base de datos');
-                    return res.json(resultado);
+                    return res.status(404).json(resultado);
                 } 
             })
             .catch(function(error){
-                console.log("No se encuentra este email en nuestra base de datos");
+                console.log("Ocurrió un error por favor vuelva a intentarlo");
             })
     },
 
@@ -70,7 +70,7 @@ const userController = {
 			.then((usuarioEnBD) =>{
 				if (usuarioEnBD) {
                     resultado.data.push('Este email ya está registrado en nuestra base de datos');
-                    return res.json(resultado);
+                    return res.status(200).json(resultado);
 				}
                 else{
                     db.Usuario.create({
@@ -80,7 +80,7 @@ const userController = {
                     resultado.data.push('Su email fue registrado en nuestra base de datos');
                     resultado.cantidad = 1;
                     sendMail(req.body.email);
-                    return res.json(resultado);
+                    return res.status(200).json(resultado);
                 }
 			})
 			.catch(function(error){

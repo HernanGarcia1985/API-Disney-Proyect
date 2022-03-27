@@ -9,7 +9,7 @@ const authorized = (req,res,next) =>{
 
         jwt.verify(token,secretKey,(err)=>{
             if(err){
-                return res.json('Token inválido');
+                return res.status(401).json('Token inválido');
             }
             else{
                 next();

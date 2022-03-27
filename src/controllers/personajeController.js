@@ -17,7 +17,7 @@ const personajeController = {
                         if(totalDePersonajes){
                             resultado.data = totalDePersonajes; 
                             resultado.cantidad = totalDePersonajes.length;
-                            res.json(resultado);
+                            res.status(200).json(resultado);
                         }
                     })
                     .catch(function(error){
@@ -50,7 +50,7 @@ const personajeController = {
                                 resultado.data.push(resultadoPelicula.dataValues);
                             }
                         }
-                        res.json(resultado);
+                        res.status(200).json(resultado);
                     })
                     .catch(function(error){
                         console.log("No se pudo acceder a la base de datos");
@@ -75,7 +75,7 @@ const personajeController = {
                 .then((personaje)=>{
                     if(personaje){
                         resultado.data.push('El personaje ya existe');
-                        res.json(resultado);
+                        res.status(200).json(resultado);
                     }
                     else{
                         db.Personaje.create({
@@ -87,7 +87,7 @@ const personajeController = {
                         });
                         resultado.data.push('El personaje se creó exitosamente');
                         resultado.cantidad = 1;
-                        res.json(resultado);
+                        res.status(201).json(resultado);
                     }
                 })
                 .catch(function(error){
@@ -116,7 +116,7 @@ const personajeController = {
                 );
                 resultado.data.push('El personaje se actualizó exitosamente');
                 resultado.cantidad = 1;
-                res.json(resultado);
+                res.status(201).json(resultado);
           
     },
 
@@ -144,7 +144,7 @@ const personajeController = {
                 });
                 resultado.data.push('El personaje ha sido borrado');
                 resultado.cantidad = 1;
-                res.json(resultado);
+                res.status(200).json(resultado);
                        
     },
 
@@ -164,7 +164,7 @@ const personajeController = {
                     if(personajes){
                         resultado.data = personajes; 
                         resultado.cantidad = personajes.length;
-                        res.json(resultado);
+                        res.status(200).json(resultado);
                     }
                 })
                 .catch(function(error){
@@ -189,7 +189,7 @@ const personajeController = {
                     if(personajes){
                         resultado.data = personajes; 
                         resultado.cantidad = personajes.length;
-                        res.json(resultado);
+                        res.status(200).json(resultado);
                     }
                 })
                 .catch(function(error){
@@ -214,7 +214,7 @@ const personajeController = {
                     if(personajes){
                         resultado.data = personajes; 
                         resultado.cantidad = personajes.length;
-                        res.json(resultado);
+                        res.status(200).json(resultado);
                     }
                 })
                 .catch(function(error){
@@ -240,7 +240,7 @@ const personajeController = {
                     if(personajes){
                         resultado.data = personajes; 
                         resultado.cantidad = personajes.length;
-                        res.json(resultado);
+                        res.status(200).json(resultado);
                     }
                 })
                 .catch(function(error){
