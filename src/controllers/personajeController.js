@@ -1,9 +1,6 @@
 const db = require('../database/models');
 const Personaje = require('../database/models/personaje');
-const jwt = require("jsonwebtoken");
-require('dotenv').config();
 
-const secretKey = process.env.SECRETKEY;
 
 const personajeController = {
 
@@ -14,13 +11,7 @@ const personajeController = {
 			cantidad: 0,
 			data: []
 		}
-        let token = req.query.token;
-        jwt.verify(token,secretKey,(err)=>{
-            if(err){
-                resultado.data.push('Token inválido');
-                res.json(resultado);
-            }
-            else{
+
                 db.Personaje.findAll({attributes: ['Imagen','Nombre']})
                     .then((totalDePersonajes) => {
                         if(totalDePersonajes){
@@ -32,8 +23,7 @@ const personajeController = {
                     .catch(function(error){
                         console.log("No se pudo acceder a la base de datos");
                     })
-            }
-        });    
+                    
     },
 
     personajesPorId: (req, res) => {
@@ -44,13 +34,6 @@ const personajeController = {
             data: []
         }
 
-        let token = req.query.token;
-        jwt.verify(token,secretKey,(err)=>{
-            if(err){
-                resultado.data.push('Token inválido');
-                res.json(resultado);
-            }
-            else{
                 let promesaPersonaje = db.Personaje.findByPk(req.params.id);
                 let promesaPelicula = db.Pelicula.findAll({
                     attributes: ['Titulo'],
@@ -72,8 +55,7 @@ const personajeController = {
                     .catch(function(error){
                         console.log("No se pudo acceder a la base de datos");
                     })
-            }
-        });           
+                   
     },
 
     personajesCreate: (req, res) => {
@@ -84,13 +66,7 @@ const personajeController = {
             data: []
         }
 
-        let token = req.query.token;
-        jwt.verify(token,secretKey,(err)=>{
-            if(err){
-                resultado.data.push('Token inválido');
-                res.json(resultado);
-            }
-            else{
+        
                 db.Personaje.findOne( //Buscar personaje por nombre y si no esta crearlo
                     {
                         where: {Nombre:req.body.nombre}
@@ -117,8 +93,7 @@ const personajeController = {
                 .catch(function(error){
                     console.log("No se pudo acceder a la base de datos");
                 })
-            }
-        });   
+           
     },
 
     personajesUpdate: (req, res) => {
@@ -129,13 +104,7 @@ const personajeController = {
             data: []
         }
 
-        let token = req.query.token;
-        jwt.verify(token,secretKey,(err)=>{
-            if(err){
-                resultado.data.push('Token inválido');
-                res.json(resultado);
-            }
-            else{
+        
                 db.Personaje.update(
                     {Imagen: "/images/" + req.file.filename,
                     Nombre: req.body.nombre ,
@@ -148,8 +117,7 @@ const personajeController = {
                 resultado.data.push('El personaje se actualizó exitosamente');
                 resultado.cantidad = 1;
                 res.json(resultado);
-            }
-        });   
+          
     },
 
     personajesDestroy: (req, res) => {
@@ -160,13 +128,7 @@ const personajeController = {
             data: []
         }
 
-        let token = req.query.token;
-        jwt.verify(token,secretKey,(err)=>{
-            if(err){
-                resultado.data.push('Token inválido');
-                res.json(resultado);
-            }
-            else{
+        
                 db.Personaje.findByPk(req.params.id)
                 .then((personaje) =>{
                     fs.unlinkSync(path.join(__dirname, '../../public/images/', personaje.Imagen));
@@ -183,8 +145,7 @@ const personajeController = {
                 resultado.data.push('El personaje ha sido borrado');
                 resultado.cantidad = 1;
                 res.json(resultado);
-            }
-        });              
+                       
     },
 
     personajesPorNombre: (req, res) => {     //Instalar Op y buscar con Like
@@ -195,13 +156,7 @@ const personajeController = {
             data: []
         }
 
-        let token = req.query.token;
-        jwt.verify(token,secretKey,(err)=>{
-            if(err){
-                resultado.data.push('Token inválido');
-                res.json(resultado);
-            }
-            else{
+        
                 db.Personaje.findAll({
                     where:{Nombre:req.query.name}
                 })
@@ -215,8 +170,7 @@ const personajeController = {
                 .catch(function(error){
                     console.log("No se pudo acceder a la base de datos");
                 })
-            }
-        });   
+           
     },
 
     personajesPorEdad: (req, res) => {
@@ -227,13 +181,7 @@ const personajeController = {
             data: []
         }
 
-        let token = req.query.token;
-        jwt.verify(token,secretKey,(err)=>{
-            if(err){
-                resultado.data.push('Token inválido');
-                res.json(resultado);
-            }
-            else{
+        
                 db.Personaje.findAll({
                     where:{Edad:req.query.age}
                 })
@@ -247,8 +195,7 @@ const personajeController = {
                 .catch(function(error){
                     console.log("No se pudo acceder a la base de datos");
                 })
-            }
-        });   
+           
     },
 
     personajesPorPeso: (req, res) => {
@@ -259,13 +206,7 @@ const personajeController = {
             data: []
         }
 
-        let token = req.query.token;
-        jwt.verify(token,secretKey,(err)=>{
-            if(err){
-                resultado.data.push('Token inválido');
-                res.json(resultado);
-            }
-            else{
+        
                 db.Personaje.findAll({
                     where:{Peso:req.query.weight}
                 })
@@ -279,8 +220,7 @@ const personajeController = {
                 .catch(function(error){
                     console.log("No se pudo acceder a la base de datos");
                 })
-            }
-        });  
+           
     },
 
     personajesPorPeliculaId: (req, res) => {
@@ -291,13 +231,7 @@ const personajeController = {
             data: []
         }
 
-        let token = req.query.token;
-        jwt.verify(token,secretKey,(err)=>{
-            if(err){
-                resultado.data.push('Token inválido');
-                res.json(resultado);
-            }
-            else{
+        
                 db.Personaje.findAll({
                     where:{Pelicula_id:req.query.movie},
                     include:[{association:'personajes'}]
@@ -312,8 +246,7 @@ const personajeController = {
                 .catch(function(error){
                     console.log("No se pudo acceder a la base de datos");
                 })
-            }
-        });  
+          
     }
 }
 

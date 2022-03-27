@@ -1,9 +1,6 @@
 const db = require('../database/models');
 const Pelicula = require('../database/models/pelicula');
-const jwt = require("jsonwebtoken");
-require('dotenv').config();
 
-const secretKey = process.env.SECRETKEY;
 
 const peliculaController = {
 
@@ -15,13 +12,7 @@ const peliculaController = {
 			data: []
 		}
 
-        let token = req.query.token;
-        jwt.verify(token,secretKey,(err)=>{
-            if(err){
-                resultado.data.push('Token inválido');
-                res.json(resultado);
-            }
-            else{
+        
                 db.Pelicula.findAll({
                     attributes: ['Imagen','Titulo','FechaCreacion']})
                         .then((totalDePeliculas) => {
@@ -34,8 +25,7 @@ const peliculaController = {
                         .catch(function(error){
                             console.log("No se pudo acceder a la base de datos");
                         })
-            }
-        });   
+           
     },
 
         peliculaPorId: (req, res) => {
@@ -45,13 +35,7 @@ const peliculaController = {
 				data: []
 			}
 
-            let token = req.query.token;
-            jwt.verify(token,secretKey,(err)=>{
-                if(err){
-                    resultado.data.push('Token inválido');
-                    res.json(resultado);
-                }
-                else{
+            
                     let promesaPelicula = db.Pelicula.findByPk(req.params.id);
                     let promesaPersonaje = db.Personaje.findAll({
                         attributes: ['Nombre'],
@@ -73,8 +57,7 @@ const peliculaController = {
                         .catch(function(error){
                             console.log("No se pudo acceder a la base de datos");
                         })
-                }
-            });               
+                           
         },
 
         peliculaCreate: (req, res) => {
@@ -85,13 +68,7 @@ const peliculaController = {
 				data: []
 			}
 
-            let token = req.query.token;
-            jwt.verify(token,secretKey,(err)=>{
-                if(err){
-                    resultado.data.push('Token inválido');
-                    res.json(resultado);
-                }
-                else{
+            
                     db.Pelicula.findOne( //Buscar pelicula por titulo y si no esta crearla
                         {
                             where: {Titulo:req.body.titulo}
@@ -118,8 +95,7 @@ const peliculaController = {
                     .catch(function(error){  
                         console.log("No se pudo acceder a la base de datos");
                     })
-                }
-            });          
+                      
         },
 
         peliculaUpdate: (req, res) => {
@@ -130,13 +106,7 @@ const peliculaController = {
 				data: []
 			}
 
-            let token = req.query.token;
-            jwt.verify(token,secretKey,(err)=>{
-                if(err){
-                    resultado.data.push('Token inválido');
-                    res.json(resultado);
-                }
-                else{
+            
                     db.Pelicula.update(
                         {Imagen: "/images/" + req.file.filename,
                         Titulo: req.body.titulo ,
@@ -149,8 +119,7 @@ const peliculaController = {
                     resultado.data.push('La pelicula se actualizó exitosamente');
                     resultado.cantidad = 1;
                     res.json(resultado);
-                }
-            });       
+                   
         },
 
         peliculaDestroy: (req, res) => {
@@ -161,13 +130,7 @@ const peliculaController = {
 				data: []
 			}
 
-            let token = req.query.token;
-            jwt.verify(token,secretKey,(err)=>{
-                if(err){
-                    resultado.data.push('Token inválido');
-                    res.json(resultado);
-                }
-                else{
+            
                     db.Pelicula.findByPk(req.params.id)
                     .then((pelicula) =>{
                         fs.unlinkSync(path.join(__dirname, '../../public/images/', pelicula.Imagen));
@@ -184,8 +147,7 @@ const peliculaController = {
                     resultado.data.push('La pelicula ha sido borrada');
                     resultado.cantidad = 1;
                     res.json(resultado);
-                }
-            });           
+                       
         },
 
         peliculasPorTitulo: (req, res) => {     //Instalar Op y buscar con Like
@@ -227,13 +189,7 @@ const peliculaController = {
 				data: []
 			}
 
-            let token = req.query.token;
-            jwt.verify(token,secretKey,(err)=>{
-                if(err){
-                    resultado.data.push('Token inválido');
-                    res.json(resultado);
-                }
-                else{
+            
                     db.Pelicula.findAll({
                         attributes: ['Imagen','Titulo','FechaCreacion','Calificacion','Nombre'],
                         where:{Genero_id:req.query.genre},
@@ -250,8 +206,7 @@ const peliculaController = {
                     .catch(function(error){
                         console.log("No se pudo acceder a la base de datos");
                     })
-                }
-            });  
+              
         }
 }
 
