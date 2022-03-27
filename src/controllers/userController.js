@@ -2,6 +2,7 @@ const db = require('../database/models');
 const Usuario = require('../database/models/usuario');
 const bcryptjs = require('bcryptjs');
 const jwt = require("jsonwebtoken");
+const sendMail = require('../tools/sendMail')
 require('dotenv').config();
 
 const secretKey = process.env.SECRETKEY;
@@ -10,7 +11,7 @@ const userController = {
     login: (req, res) => {
 
         let resultado = {
-			link: "http://localhost:3000/auth/login",
+			link: "http://localhost:3000/users/auth/login",
 			cantidad: 0,
 			data: [],
             token: []
@@ -23,7 +24,7 @@ const userController = {
         })
             .then((usuarioLogin) =>{
                 if(usuarioLogin) {
-                    let validarPassword = bcryptjs.compareSync(req.body.password, usuarioLogin.password);
+                    let validarPassword = bcryptjs.compareSync(req.body.password, usuarioLogin.dataValues.Password);
                     if (validarPassword == true) { 
                         const token = jwt.sign(
                             {
@@ -56,7 +57,7 @@ const userController = {
     register: (req, res) => {
 
         let resultado = {
-			link: "http://localhost:3000/auth/register",
+			link: "http://localhost:3000/users/auth/register",
 			cantidad: 0,
 			data: [],
 		}
@@ -73,11 +74,12 @@ const userController = {
 				}
                 else{
                     db.Usuario.create({
-                        email: req.body.email,
-                        password: bcryptjs.hashSync(req.body.password, 10),
+                        Email: req.body.email,
+                        Password: bcryptjs.hashSync(req.body.password, 10),
                     });
                     resultado.data.push('Su email fue registrado en nuestra base de datos');
                     resultado.cantidad = 1;
+                    sendMail(req.body.email);
                     return res.json(resultado);
                 }
 			})
